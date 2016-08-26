@@ -1,7 +1,9 @@
 const Bottle = require('bottlejs');
 const sinon = require('sinon');
 const assert = require('assert');
+
 const sayHi = require('../src/sayHi.js');
+const sayBye = require('../src/sayBye.js');
 
 describe('My Application', function() {
   let di;
@@ -9,6 +11,7 @@ describe('My Application', function() {
   beforeEach(() => {
     di = new Bottle();
     di.factory('sayHi', sayHi);
+    di.factory('sayBye', sayBye);
     di.constant('log', sinon.spy());
     di.constant('keyValueStore', {
       get: sinon.stub(),
@@ -26,7 +29,6 @@ describe('My Application', function() {
           assert(di.container.log.calledWith('Thank you, see you next time foobar'));
         });
     });
-
     it('should remember your name on second visit', function() {
       di.container.keyValueStore.get.onFirstCall().returns('foobar');
       return di.container.sayHi()
@@ -34,6 +36,15 @@ describe('My Application', function() {
           assert(di.container.prompt.called === false);
           assert(di.container.log.calledWith('Hi there foobar, welcome back!'));
         });
+    });
+    it('should say bye with your name', function() {
+      di.container.keyValueStore.get.onFirstCall().returns('foobar');
+      di.container.sayBye();
+      assert(di.container.log.calledWith('See you later foobar'));
+    });
+    it('should say bye with your name', function() {
+      di.container.sayBye();
+      assert(di.container.log.calledWith('See you later mate'));
     });
   });
 });
