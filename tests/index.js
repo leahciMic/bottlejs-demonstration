@@ -18,8 +18,8 @@ describe('My Application', function() {
     sayBye = sayByeFactory(injected);
   });
 
-  describe('persists your name', function() {
-    it('should prompt for your name on first visit', function() {
+  describe('Salutation', function() {
+    it('when name is unknown, should prompt for your name', function() {
       return sayHi()
         .then(() => {
           assert(injected.prompt.calledWith('Hi, I don\'t believe we have met, what is your name? '));
@@ -28,7 +28,7 @@ describe('My Application', function() {
         });
     });
 
-    it('should remember your name on second visit', function() {
+    it('when name is known, should welcome you bye name', function() {
       injected.keyValueStore.get.onFirstCall().returns('foobar');
       return sayHi()
         .then(() => {
@@ -38,15 +38,15 @@ describe('My Application', function() {
     });
   });
 
-  describe('saying bye', function() {
-    it('should use your name if possible', function() {
+  describe('Valediction', function() {
+    it('when name is unknown, should say bye with mate', function() {
+      sayBye();
+      assert(injected.log.calledWith('See you later mate'));
+    });
+    it('when name is known, should say bye with your name', function() {
       injected.keyValueStore.get.onFirstCall().returns('foobar');
       sayBye();
       assert(injected.log.calledWith('See you later foobar'));
     });
-    it('should use "mate" if it doesn not have your name', function() {
-      sayBye();
-      assert(injected.log.calledWith('See you later mate'));
-    });
-  })
+  });
 });
