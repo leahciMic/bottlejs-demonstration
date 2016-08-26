@@ -2,16 +2,16 @@ const Bottle = require('bottlejs');
 const sinon = require('sinon');
 const assert = require('assert');
 
-const sayHi = require('../src/sayHi.js');
-const sayBye = require('../src/sayBye.js');
+const sayHiFactory = require('../src/sayHi.js');
+const sayByeFactory = require('../src/sayBye.js');
 
 describe('My Application', function() {
   let di;
 
   beforeEach(() => {
     di = new Bottle();
-    di.factory('sayHi', sayHi);
-    di.factory('sayBye', sayBye);
+    di.factory('sayHi', sayHiFactory);
+    di.factory('sayBye', sayByeFactory);
     di.constant('log', sinon.spy());
     di.constant('keyValueStore', {
       get: sinon.stub(),
