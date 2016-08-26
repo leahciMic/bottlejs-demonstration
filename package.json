@@ -10,7 +10,6 @@
   "author": "Michael Leaney <leahcimic@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "bottlejs": "^1.4.0",
     "mocha": "^3.0.2"
   },
   "devDependencies": {
