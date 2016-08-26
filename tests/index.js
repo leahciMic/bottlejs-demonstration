@@ -20,8 +20,8 @@ describe('My Application', function() {
     di.constant('prompt', sinon.spy(() => Promise.resolve('foobar')));
   });
 
-  describe('persists your name', function() {
-    it('should prompt for your name on first visit', function() {
+  describe('Salutation', function() {
+    it('when name is unknown, should prompt for your name', function() {
       return di.container.sayHi()
         .then(() => {
           assert(di.container.prompt.calledWith('Hi, I don\'t believe we have met, what is your name? '));
@@ -29,7 +29,7 @@ describe('My Application', function() {
           assert(di.container.log.calledWith('Thank you, see you next time foobar'));
         });
     });
-    it('should remember your name on second visit', function() {
+    it('when name is known, should welcome you bye name', function() {
       di.container.keyValueStore.get.onFirstCall().returns('foobar');
       return di.container.sayHi()
         .then(() => {
@@ -37,14 +37,17 @@ describe('My Application', function() {
           assert(di.container.log.calledWith('Hi there foobar, welcome back!'));
         });
     });
-    it('should say bye with your name', function() {
+  });
+
+  describe('Valediction', function() {
+    it('when name is unknown, should say bye with mate', function() {
+      di.container.sayBye();
+      assert(di.container.log.calledWith('See you later mate'));
+    });
+    it('when name is known, should say bye with your name', function() {
       di.container.keyValueStore.get.onFirstCall().returns('foobar');
       di.container.sayBye();
       assert(di.container.log.calledWith('See you later foobar'));
-    });
-    it('should say bye with your name', function() {
-      di.container.sayBye();
-      assert(di.container.log.calledWith('See you later mate'));
     });
   });
 });
