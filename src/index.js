@@ -1,4 +1,3 @@
-const di = require('./di-container.js');
 
 di.constant('STATE_STORE_FILE_URL', './state-store.json');
 di.constant('log', console.log.bind(console));
