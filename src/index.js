@@ -6,7 +6,6 @@ const keyValueStore = require('./dumb-state-store.js')({ STATE_STORE_FILE_URL })
 const sayHi = require('./sayHi.js');
 const sayBye = require('./sayBye.js');
 
-sayHi({ keyValueStore, log, prompt })()
-  .then(function() {
-    sayBye({ keyValueStore, log })();
-  });
+sayHi({ keyValueStore, log, prompt })().then(function() {
+  sayBye({ keyValueStore, log })();
+});

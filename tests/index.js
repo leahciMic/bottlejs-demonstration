@@ -1,10 +1,14 @@
 const sinon = require('sinon');
 const assert = require('assert');
+
 const sayHiFactory = require('../src/sayHi.js');
 const sayByeFactory = require('../src/sayBye');
 
 describe('My Application', function() {
-  let sayHi, injected;
+  let sayHi;
+  let injected;
+  let sayBye;
+
   beforeEach(() => {
     injected = {
       log: sinon.spy(),
