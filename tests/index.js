@@ -2,7 +2,7 @@ const sinon = require('sinon');
 const assert = require('assert');
 
 const sayHiFactory = require('../src/sayHi.js');
-const sayByeFactory = require('../src/sayBye');
+const sayByeFactory = require('../src/sayBye.js');
 
 describe('My Application', function() {
   let sayHi;
