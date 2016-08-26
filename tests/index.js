@@ -1,6 +1,7 @@
 const sinon = require('sinon');
 const assert = require('assert');
 const sayHiFactory = require('../src/sayHi.js');
+const sayByeFactory = require('../src/sayBye');
 
 describe('My Application', function() {
   let sayHi, injected;
@@ -14,6 +15,7 @@ describe('My Application', function() {
       prompt: sinon.spy(() => Promise.resolve('foobar')),
     };
     sayHi = sayHiFactory(injected);
+    sayBye = sayByeFactory(injected);
   });
 
   describe('persists your name', function() {
@@ -35,4 +37,16 @@ describe('My Application', function() {
         });
     });
   });
+
+  describe('saying bye', function() {
+    it('should use your name if possible', function() {
+      injected.keyValueStore.get.onFirstCall().returns('foobar');
+      sayBye();
+      assert(injected.log.calledWith('See you later foobar'));
+    });
+    it('should use "mate" if it doesn not have your name', function() {
+      sayBye();
+      assert(injected.log.calledWith('See you later mate'));
+    });
+  })
 });
